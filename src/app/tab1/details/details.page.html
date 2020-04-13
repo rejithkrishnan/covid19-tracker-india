@@ -1,0 +1,103 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-title>{{state}} COVID19 Status</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="tabs/tab1"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">India Status</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-item-group>
+    <ion-card >
+      <ion-card-header>
+          <ion-item lines="none" class="no-padding no-margin" style="margin: 0px;">
+              <ion-label size="large" color="danger" class="no-padding no-margin card-header" style="margin: 0px;"> TOTAL CONFIRMED CASES</ion-label>
+              <ion-button (click)="toggleScale('total')" class="no-padding no-margin" color="danger" fill="clear"
+                slot="end">{{scaleType}}</ion-button>
+            </ion-item>
+        <ion-card-title class="ion-text-center" color="danger">
+          <span style="font-size: xx-large;">
+            {{stateData?.confirmed}}
+          </span>[{{getSymbol(stateData?.deltaconfirmed)}}{{stateData?.deltaconfirmed}}]
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <canvas #dailyConfirmedCanvas></canvas>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card >
+      <ion-card-header>
+        <ion-card-subtitle class="ion-text-center" color="danger">DAILY CONFIRMED CASES</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <canvas #confirmedCanvas></canvas>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card class="primary">
+      <ion-card-header>
+        <ion-card-subtitle class="ion-text-center" color="primary">ACTIVE</ion-card-subtitle>
+        <ion-card-title class="ion-text-center" color="primary">
+          <span style="font-size: xx-large;">
+            {{stateData?.active}}
+          </span>[{{getSymbol(stateData?.deltaactive)}}{{stateData?.deltaactive}}]
+        </ion-card-title>
+      </ion-card-header>
+    </ion-card>
+
+    <ion-grid fixed class="ion-no-padding">
+      <ion-row class="ion-no-padding">
+        <ion-col size="6" class="ion-no-padding">
+          <!-- <ion-card class="recovery" button (click)='toggleVisibility("recovered")'> -->
+          <ion-card class="recovery" button>
+            <ion-card-header>
+              <ion-card-subtitle class="ion-text-center" color="success">RECOVERED</ion-card-subtitle>
+              <ion-card-title class="ion-text-center" color="success">
+                <span style="font-size: xx-large;">
+                  {{stateData?.recovered}}
+                </span>[{{getSymbol(stateData?.deltarecovered)}}{{stateData?.deltarecovered}}]
+              </ion-card-title>
+            </ion-card-header>
+          </ion-card>
+        </ion-col>
+        <ion-col size="6" class="ion-no-padding">
+          <!-- <ion-card class="death" button (click)=' toggleVisibility("death")' name='death'> -->
+          <ion-card class="death" button name='death'>
+            <ion-card-header>
+              <ion-card-subtitle class="ion-text-center">DECEASED</ion-card-subtitle>
+              <ion-card-title class="ion-text-center">
+                <span style="font-size: xx-large;">
+                  {{stateData?.deaths}}
+                </span>[{{getSymbol(stateData?.deltadeaths)}}{{stateData?.deltadeaths}}]
+              </ion-card-title>
+            </ion-card-header>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item-group>
+
+  <ion-item-group>
+    <ion-item-divider>
+      <ion-label>Statewise Status</ion-label>
+    </ion-item-divider>
+    <ion-searchbar placeholder="Search District" inputmode="text" type="text" (ionChange)="onSearchChange($event)"
+      [debounce]="250"></ion-searchbar>
+    <ngx-datatable [rows]="districtData" [ngClass]="'bootstrap'" [columnMode]="'force'"
+      [sorts]="[{prop: 'confirmed', dir: 'desc'}]" [rowHeight]="'auto'">
+
+      <ngx-datatable-column name="District"></ngx-datatable-column>
+      <ngx-datatable-column name="Confirmed"></ngx-datatable-column>
+      <ngx-datatable-column name="New Case" prop="delta.confirmed">
+      </ngx-datatable-column>
+    </ngx-datatable>
+  </ion-item-group>
+</ion-content>

@@ -1,0 +1,128 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="dark">
+    <ion-title>
+      India Status
+    </ion-title>
+    <ion-title slot="end" style="font-size: smaller;">
+      Last updated {{overall?.total?.lastupdatedtime|date:'MM-dd-yyyy HH:mm:ss'}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">India Status</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-refresher slot="fixed" pullFactor="0.5" pullMin="50" pullMax="300" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <!-- <ion-item class="ion-text-center" *ngIf="patients.length === 0" lines="none">
+    <ion-label>Loading..</ion-label>
+  </ion-item> -->
+  <ion-item-group>
+    <!-- <ion-item lines="none" class="ion-no-padding"> -->
+    <!-- <ion-label class="ion-padding" class="ion-text-end" color="medium">Last Updated
+      {{overall?.total?.lastupdatedtime|date:'MM-dd-yyyy HH:mm:ss'}}</ion-label> -->
+    <!-- </ion-item> -->
+    <ion-item button detail lines="none" (click)="onStattistics()" >
+      <ion-label color="danger">More statistics</ion-label>
+    </ion-item>
+    <!-- <div class="ion-padding" (click)="onStattistics()" button class="ion-text-right" style="text-decoration: underline;color: darkgreen;" >More Statistics</div> -->
+    <ion-card>
+      <ion-card-header>
+        <ion-item lines="none" class="no-padding no-margin" style="margin: 0px;">
+          <ion-label size="large" color="danger" class="no-padding no-margin card-header" style="margin: 0px;"> TOTAL
+            CONFIRMED CASES</ion-label>
+          <ion-button (click)="toggleScale('total')" class="no-padding no-margin" color="danger" fill="clear"
+            slot="end">{{scaleType}}</ion-button>
+        </ion-item>
+        <ion-card-title class="ion-text-center" color="danger">
+          <span style="font-size: xx-large;">
+            {{overall?.total?.confirmed}}
+          </span>[{{getSymbol(overall?.total?.deltaconfirmed)}}{{overall?.total?.deltaconfirmed}}]
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <canvas #totalCanvas></canvas>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card class="primary">
+      <ion-card-header>
+        <ion-card-subtitle class="ion-text-center" color="primary">ACTIVE</ion-card-subtitle>
+        <ion-card-title class="ion-text-center" color="primary">
+          <span style="font-size: xx-large;">
+            {{overall?.total?.active}}
+          </span>[{{getSymbol(overall?.total?.deltaactive)}}{{overall?.total?.deltaactive}}]
+        </ion-card-title>
+      </ion-card-header>
+    </ion-card>
+
+    <ion-grid fixed class="ion-no-padding">
+      <ion-row class="ion-no-padding">
+        <ion-col size="6" class="ion-no-padding">
+          <!-- <ion-card class="recovery" button (click)='toggleVisibility("recovered")'> -->
+          <ion-card class="recovery" button>
+            <ion-card-header>
+              <ion-card-subtitle class="ion-text-center" color="success">RECOVERED</ion-card-subtitle>
+              <ion-card-title class="ion-text-center" color="success">
+                <span style="font-size: xx-large;">
+                  {{overall?.total?.recovered}}
+                </span>[{{getSymbol(overall?.total?.deltarecovered)}}{{overall?.total?.deltarecovered}}]
+              </ion-card-title>
+            </ion-card-header>
+            <ion-card-content [hidden]=!isRecovery>
+              <canvas #recoveryCanvas></canvas>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+        <ion-col size="6" class="ion-no-padding">
+          <!-- <ion-card class="death" button (click)=' toggleVisibility("death")' name='death'> -->
+          <ion-card class="death" button name='death'>
+            <ion-card-header>
+              <ion-card-subtitle class="ion-text-center">DECEASED</ion-card-subtitle>
+              <ion-card-title class="ion-text-center">
+                <span style="font-size: xx-large;">
+                  {{overall?.total?.deaths}}
+                </span>[{{getSymbol(overall?.total?.deltadeaths)}}{{overall?.total?.deltadeaths}}]
+              </ion-card-title>
+            </ion-card-header>
+            <ion-card-content [hidden]=!isDeath>
+              <canvas #deathCanvas></canvas>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+  </ion-item-group>
+
+  <ion-item-group>
+    <ion-item-divider>
+      <ion-label>Statewise Status</ion-label>
+    </ion-item-divider>
+    <ion-searchbar placeholder="Search State" inputmode="text" type="text" (ionChange)="onSearchChange($event)"
+      [debounce]="250"></ion-searchbar>
+    <ngx-datatable [rows]="stateWise" [ngClass]="'bootstrap striped'" [rowHeight]="'auto'" [columnMode]="'force'"
+      [rowClass]="getRowClass" [sorts]="[{prop: 'confirmed', dir: 'desc'}]" (activate)="gotoState($event)">
+
+      <ngx-datatable-column [width]="125" [resizeable]="false" [canAutoResize]="false" name="State">
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Confirmed">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{row.confirmed}}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="New" prop="deltaconfirmed">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          <span *ngIf="row.deltaconfirmed !== 0" style="color: crimson;">{{row.deltaconfirmed}}</span>
+        </ng-template>
+      </ngx-datatable-column>
+      <!-- <ngx-datatable-column name="deltaconfirmed" ></ngx-datatable-column> -->
+      <ngx-datatable-column name="Active"></ngx-datatable-column>
+      <ngx-datatable-column name="Deaths"></ngx-datatable-column>
+    </ngx-datatable>
+  </ion-item-group>
+</ion-content>

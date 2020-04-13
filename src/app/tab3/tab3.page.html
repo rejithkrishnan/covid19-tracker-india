@@ -1,0 +1,90 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="dark">
+    <ion-title>
+      FAQ
+    </ion-title>
+    <ion-buttons slot="start">
+        <ion-back-button defaultHref="tabs/tab1"></ion-back-button>
+      </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar color="dark">
+      <ion-title size="large">FAQ</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-item-group>
+    <ion-card>
+        <ion-card-header>
+            <ion-card-title color="primary">What is this app?</ion-card-title>
+          </ion-card-header>
+      <ion-card-content>
+        This is a mobile app for tracking COVID19 status in India. All data is sourced from APIs provided by covid19india.org. 
+        Please visit thier visit at <a href="https://www.covid19india.org/">covid19india.org</a>  for more detailed statistics 
+      </ion-card-content>
+    </ion-card>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title color="primary">Are you official?</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        No
+      </ion-card-content>
+    </ion-card>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title color="primary">What are your data sources?</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        Data is updated as and when covid19india.org database is updated.
+        <a href="https://www.covid19india.org/">covid19india.org</a> are using state bulletins and official handles to update our numbers. The data is validated by a group of volunteers and published into a Google sheet and an API
+      </ion-card-content>
+    </ion-card>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title color="primary">Why does covid19india.org have more positive count than MoH?</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+          MoHFW updates the data at a scheduled time. However, we update them based on state press bulletins, official handles and reliable news channels which could be more recent.
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+        <ion-card-header>
+          <ion-card-title color="success">Some useful links</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-item-group>
+            <!-- <ion-item lines="none">
+              <ion-label>
+                <a href="https://www.mohfw.gov.in/pdf/coronvavirushelplinenumber.pdf">HELPLINE NUMBERS [BY STATE]</a>
+              </ion-label>
+            </ion-item> -->
+            <ion-item lines="none">
+              <ion-label text-wrap>
+                <a href="HTTPS://WWW.MOHFW.GOV.IN/">MINISTRY OF HEALTH AND FAMILY WELFARE, GOV. OF INDIA</a>
+              </ion-label>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-label text-wrap>
+                <a href="HTTPS://WWW.WHO.INT/EMERGENCIES/DISEASES/NOVEL-CORONAVIRUS-2019">WHO : COVID-19 HOME PAGE</a>
+              </ion-label>
+            </ion-item>
+            <ion-item lines="none" >
+              <ion-label text-wrap>
+                <a href="https://docs.google.com/spreadsheets/u/1/d/e/2PACX-1vShWjNeNn8n0hen_5KIWQhq_RLCq4Obn23SUzRSAT5fKCQgOZuZnWe57g79elkwum2zavntG_GSawDM/pubhtml?gid=1775152218&single=true">CROWDSOURCED LIST OF RESOURCES & ESSENTIALS FROM ACROSS INDIA</a>
+              </ion-label>
+            </ion-item>
+            <ion-item lines="none" >
+              <ion-label text-wrap>
+                <a href="https://coronavirus.thebaselab.com/">COVID-19 GLOBAL TRACKER</a>
+              </ion-label>
+            </ion-item>
+          </ion-item-group>
+        </ion-card-content>
+      </ion-card>
+
+  </ion-item-group>
+</ion-content>

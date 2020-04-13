@@ -1,0 +1,85 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-title>Covid India Statistics</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="tabs/tab1"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-item lines="none">
+        <ion-label size="large" color="danger">TOTAL CONFIRMED CASES</ion-label>
+        <ion-button (click)="toggleScale('confirmed')" class="no-padding no-margin" color="danger" fill="clear"
+          slot="end">{{scaleType}}</ion-button>
+      </ion-item>
+      <ion-card-title class="ion-text-center" color="danger">
+        <span style="font-size: xx-large;">
+          {{overall?.total?.confirmed}}
+        </span>[{{getSymbol(overall?.total?.deltaconfirmed)}}{{overall?.total?.deltaconfirmed}}]
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <canvas #totalCanvas></canvas>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title color="danger">
+        DAILY CONFIRMED CASES
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <canvas #dailyConfirmCanvas></canvas>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+
+      <ion-item lines="none">
+        <ion-label size="large" color="danger">TOTAL SAMPLES TESTED</ion-label>
+        <ion-button (click)="toggleScale('sample')" class="no-padding no-margin" color="danger" fill="clear" slot="end">
+          {{sampleScaleType}}</ion-button>
+      </ion-item>
+      <ion-card-title class="ion-text-center" color="danger">
+        {{timeSeries.tested[timeSeries.tested.length - 1].totalsamplestested}}
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <canvas #sampleTestedCanvas></canvas>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-item lines="none">
+        <ion-label size="large" color="dark">TOTAL DEATH</ion-label>
+        <ion-button (click)="toggleScale('death')" class="no-padding no-margin" color="dark" fill="clear" slot="end">
+          {{deathScaleType}}</ion-button>
+      </ion-item>
+      <ion-card-title class="ion-text-center" color="dark">
+        <span style="font-size: xx-large;">
+          {{overall?.total?.deaths}}
+        </span>[{{getSymbol(overall?.total?.deltadeaths)}}{{overall?.total?.deltadeaths}}]
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <canvas #deathCanvas></canvas>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-item lines="none">
+        <ion-label size="large" color="dark">DAILY DEATHS</ion-label>
+      </ion-item>
+    </ion-card-header>
+    <ion-card-content>
+      <canvas #dailyDeathCanvas></canvas>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
